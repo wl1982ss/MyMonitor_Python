@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>memory monitor</title>
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.11.1.min.js') }}"></script>
+    <style type="text/css">
+        ${demo.css}
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            setInterval(function() {
+                $.getJSON('/data?callback=?', function (data) {
+                    // Create the chart
+                    $('#container').highcharts('StockChart', {
+                        rangeSelector: {
+                            inputEnabled: $("#container").width() > 480,
+                            selected: 1
+                        },
+                        title: {
+                            text: 'memory monitor'
+                        },
+                        series: [{
+                            name: 'memory monitor',
+                            data: data,
+                            type: 'spline',
+                            tooltip: {
+                                valueDecimals: 2
+                            }
+                        }]
+                    });
+
+                })
+            }, 3000);
+
+        });
+    </script>
+</head>
+<body>
+    <!-- <script src="{{ url_for('static', filename='highstock.js') }}"></script> -->
+    <script src="https://cdn.hcharts.cn/highstock/highstock.js"></script>
+    <!-- <script src="{{ url_for('static', filename='exporting.js') }}"></script> -->
+    <div id="container" style="height: 400px"></div>
+</body>
+</html>
